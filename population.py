@@ -1,4 +1,5 @@
 print("Algoritmos Geneticos")
+'''Adapcion por PHIKUBO'''
 import random
 import time
 from random import randint
