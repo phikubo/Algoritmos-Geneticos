@@ -561,7 +561,6 @@ switch planificador
  case 3 %%Estrategia de planificaci�n Proportional Fair(PF)   
         
     [prb_PF]=plan_Proportional_Fair(nc,tp_PF,tbs,SINR,prb,3*nues);
-    prb_PF
     contador=contador+1
     tabla_capacidad= xlsread('capacidad.xls');
     for i=1:3*nues 
