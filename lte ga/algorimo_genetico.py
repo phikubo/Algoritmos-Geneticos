@@ -10,6 +10,8 @@ import time
     y definirlas por defecto. Esto es con el propósito de agilizar los ensayos y obtener
     resultados esperados.
     1.1. guardar las coordenadas en un archivo de lectura con las cordenadas x,y de los ue.
+
+    2. siempre son 10 iteraciones. En cada iteración tbs y prb_xx son distintos
 '''
 
 def main(porc):
