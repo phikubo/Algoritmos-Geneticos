@@ -84,9 +84,9 @@ def eval_Throughput(individual):
     thinit=throughput
     #sin sirn recursos 102 funciona ok
     if recursos>100:
-        throughput=throughput-0.5*throughput
+        throughput=throughput-0.7*throughput
     if np.count_nonzero(individual)!=28:
-        throughput=throughput-0.3*throughput
+        throughput=throughput-0.4*throughput
         #tercer resultado con 50 funciona perfecto
         #segundo resultado con 0.87 resulta en 0,1,7
         #primer resutaldo con 0.6 sin sirn
@@ -94,27 +94,6 @@ def eval_Throughput(individual):
     #print("recursos: ", recursos, "inicial: ",thinit, " / velocidad: ",throughput, "distancia: ",thinit/throughput)
     return throughput,
 
-def evalTSP(individual):
-    print("----------->individuo", individual)
-    print("----------->gen: ", individual[0], individual[1])
-    #print("tipo: ", type(individual))
-    recursos=np.sum(individual)
-    print("suma:" , np.sum(individual))
-    #print("coordenadas de individuos")
-    #print(x[individual])
-    #print(">>>>end")
-    diffx = np.diff(x[individual])
-    diffy = np.diff(y[individual])
-    distance = np.sum(diffx**2 + diffy**2)
-    print("suma1: ", distance)
-    #ajuste de tamaño de cadena de acuerdo a la maximizacion de distancia
-    if np.sum(individual)>100:
-        distance=distance-2*distance
-    print("suma2: ",distance)
-    time.sleep(1)
-    return distance,
-
-#toolbox.register("evaluate", evalTSP)
 
 toolbox.register("evaluate", eval_Throughput)
 
