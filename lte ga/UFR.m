@@ -90,8 +90,12 @@ global UEy
 global seup
 global seupcl
 global contador
+global nombre_secuencia_tbs
+global nombre_secuencia_snr
 %% Valores asignados desde la GUI
 contador=0
+nombre_secuencia_tbs='tbs';
+nombre_secuencia_snr='snr';
 ta=valores(1);
 desvanecimiento=valores(2);
 modelo=valores(3);
@@ -194,54 +198,54 @@ thetac2=zeros((nues*3),4);
 thetac3=zeros((nues*3),4);
 thetac4=zeros((nues*3),4);
 %--------------------------------------------------------------------
-figure
+%figure
 %celda 1
-[posx, posy,n]=sector1(0,0,nues,radio,ap);
-pos1=[posx;posy]';
-[posx, posy,n]=sector2(0,0,nues,radio,ap,n);
-pos2=[posx;posy]';
+%[posx, posy,n]=sector1(0,0,nues,radio,ap);
+%pos1=[posx;posy]';
+%[posx, posy,n]=sector2(0,0,nues,radio,ap,n);
+%pos2=[posx;posy]';
 
-[posx, posy]=sector3(0,0,nues,radio,ap,n);
-pos3=[posx;posy]';
+%[posx, posy]=sector3(0,0,nues,radio,ap,n);
+%pos3=[posx;posy]';
 
 %pos_ue_celda1=[pos1;pos2;pos3];
 
 %-------------------------------------------------------------
 %celda 2
-[posx, posy,n]=sector1(0,2*ap,nues,radio,ap);
-pos1=[posx;posy]';
+%[posx, posy,n]=sector1(0,2*ap,nues,radio,ap);
+%pos1=[posx;posy]';
 
-[posx, posy,n]=sector2(0,2*ap,nues,radio,ap,n);
-pos2=[posx;posy]';
+%[posx, posy,n]=sector2(0,2*ap,nues,radio,ap,n);
+%pos2=[posx;posy]';
 
-[posx, posy]=sector3(0,2*ap,nues,radio,ap,n);
-pos3=[posx;posy]';
+%[posx, posy]=sector3(0,2*ap,nues,radio,ap,n);
+%pos3=[posx;posy]';
 
 %pos_ue_celda2=[pos1;pos2;pos3];
 
 %-------------------------------------------------------------
 %celda 3
-[posx, posy,n]=sector1((6*radio/4),ap,nues,radio,ap);
-pos1=[posx;posy]';
+%[posx, posy,n]=sector1((6*radio/4),ap,nues,radio,ap);
+%pos1=[posx;posy]';
 
-[posx, posy,n]=sector2((6*radio/4),ap,nues,radio,ap,n);
-pos2=[posx;posy]';
+%[posx, posy,n]=sector2((6*radio/4),ap,nues,radio,ap,n);
+%pos2=[posx;posy]';
 
-[posx, posy]=sector3((6*radio/4),ap,nues,radio,ap,n);
-pos3=[posx;posy]';
+%[posx, posy]=sector3((6*radio/4),ap,nues,radio,ap,n);
+%pos3=[posx;posy]';
 
 %pos_ue_celda3=[pos1;pos2;pos3];
 
 %-------------------------------------------------------------
 %celda 4
-[posx,posy,n]=sector1((6*radio/4),3*ap,nues,radio,ap);
-pos1=[posx;posy]';
+%[posx,posy,n]=sector1((6*radio/4),3*ap,nues,radio,ap);
+%pos1=[posx;posy]';
 
-[posx,posy,n]=sector2((6*radio/4),3*ap,nues,radio,ap,n);
-pos2=[posx;posy]';
+%[posx,posy,n]=sector2((6*radio/4),3*ap,nues,radio,ap,n);
+%pos2=[posx;posy]';
 
-[posx, posy]=sector3((6*radio/4),3*ap,nues,radio,ap,n);
-pos3=[posx;posy]';
+%[posx, posy]=sector3((6*radio/4),3*ap,nues,radio,ap,n);
+%pos3=[posx;posy]';
 
 %pos_ue_celda4=[pos1;pos2;pos3];
 
@@ -272,17 +276,17 @@ XBS=radio*[x(1) x(1) x(2) x(2)];
 YBS=radio*[y(1) y(3) y(2) y(4)];
 posc_bs=[XBS;YBS]';
 
-for i=1:length(XBS)
-    plot3(XBS(i),YBS(i),0:0.1:hant,'.b');
-end
+%for i=1:length(XBS)
+%    plot3(XBS(i),YBS(i),0:0.1:hant,'.b');
+%end
 
-set(gcf,'color', [1 1 1],'Name','Escenario de estudio','NumberTitle','off');
-axis([-radio/2 4*radio -radio/2 4.8*radio 0 1.5*radio]);
-xlabel('Eje X');
-ylabel('Eje Y');
-zlabel('Eje Z');
-view(3)
-grid on;
+%set(gcf,'color', [1 1 1],'Name','Escenario de estudio','NumberTitle','off');
+%axis([-radio/2 4*radio -radio/2 4.8*radio 0 1.5*radio]);
+%xlabel('Eje X');
+%ylabel('Eje Y');
+%zlabel('Eje Z');
+%view(3)
+%grid on;
 
 
 %% C�lculo de distancia y �ngulo(theta) entre eNB y UE
@@ -369,8 +373,12 @@ tic;
 for i=1:3
 run ('Cargando')
 end
+
+%->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+%->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 for NumSim=1:rept
-NumSim; 
+NumSim
 %% Calculo de potencias en cada celda
 
 % Celda1
@@ -561,13 +569,22 @@ switch planificador
  case 3 %%Estrategia de planificaci�n Proportional Fair(PF)   
         
     [prb_PF]=plan_Proportional_Fair(nc,tp_PF,tbs,SINR,prb,3*nues);
-    contador=contador+1
+    archivo_tbs=strcat(nombre_secuencia_tbs, num2str(NumSim),'.txt')
+    archivo_snr=strcat(nombre_secuencia_snr, num2str(NumSim),'.txt')
+    %tbs;
+    fid = fopen(archivo_snr, 'wt');
+    fprintf(fid,'%f %f %f %f\n',[SINR(:,1),SINR(:,2),SINR(:,3),SINR(:,4)]);
+    fid = fclose(fid);
+    
+    fid = fopen(archivo_tbs, 'wt');
+    fprintf(fid,'%f %f %f %f\n',[tbs(:,1), tbs(:,2), tbs(:,3), tbs(:,4)]);
+    fid = fclose(fid);
+    %save -ascii archivo_tbs tbs;
     tabla_capacidad= xlsread('capacidad.xls');
     for i=1:3*nues 
     for j=1:4
-    testingvar=tabla_capacidad(tbs(i,j)+2,prb_PF(i,j)+1)
     throughput_PF(i,j)=tabla_capacidad(tbs(i,j)+2,prb_PF(i,j)+1);
-    
+    throughput_PF(i,j)
     end
     end
 
@@ -575,7 +592,10 @@ switch planificador
     PF2(:,NumSim)=prb_PF(:,2);
     PF3(:,NumSim)=prb_PF(:,3);
     PF4(:,NumSim)=prb_PF(:,4);
-    
+    %PF1
+    %PF2
+    %PF3
+    %PF4
     tp_PF=sum(throughput_PF)/3*nues;
  case 4 %%Estrategia de planificaci�n Maximun Rate (MR)   
         
@@ -1101,6 +1121,7 @@ SINR_T = [SINR_T;SINR];
 end
 run 'Cargando'
 end
+%----------------------------------------------------------
 %Radios promedios de Cobertura en cada Celda OLPC
 rdup1 = sum(Radio1)/rept;
 rdup2 = sum(Radio2)/rept;

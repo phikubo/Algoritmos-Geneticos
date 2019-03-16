@@ -1,0 +1,159 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{graphicx}
+\usepackage{lscape}
+\title{Output tables for the test of Multiple comparisons.}
+\author{}
+\date{\today}
+\begin{document}
+\begin{landscape}
+\pagestyle{empty}
+\maketitle
+\thispagestyle{empty}
+\section{Average rankings of Friedman test}
+
+
+
+Average ranks obtained by applying the Friedman procedure
+
+\begin{table}[!htp]
+\centering
+\begin{tabular}{|c|c|}\hline
+Algorithm&Ranking\\\hline
+Conf 1 & 3.2\\
+Conf 2 & 3.8\\
+Conf 3 & 5.2\\
+Conf 4 & 2.6\\
+Conf 5 & 4.4\\
+Conf 6 & 4.6\\
+Conf 7 & 4.2\\
+\hline
+\end{tabular}
+\caption{Average Rankings of the algorithms}
+\end{table}
+
+Friedman statistic considering reduction performance (distributed according to chi-square with 6 degrees of freedom: 4.971429.
+
+P-value computed by Friedman Test: 0.5474828246699731.\newline
+
+Iman and Davenport statistic considering reduction performance (distributed according to F-distribution with 6 and 24 degrees of freedom: 0.794521.
+
+P-value computed by Iman and Daveport Test: 0.5833663179134587.\newline
+
+
+
+\pagebreak
+
+\section{Post hoc comparisons}
+
+Results achieved on post hoc comparisons for $\alpha = 0.05$, $\alpha = 0.10$ and adjusted p-values.
+
+\subsection{P-values for $\alpha=0.05$}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{cccccc}
+$i$&algorithms&$z=(R_0 - R_i)/SE$&$p$&Holm&Shaffer\\
+\hline21&Conf 3 vs. Conf 4&1.903005&0.05704&0.002381&0.002381\\
+20&Conf 1 vs. Conf 3&1.46385&0.143235&0.0025&0.0025\\
+19&Conf 4 vs. Conf 6&1.46385&0.143235&0.002632&0.002632\\
+18&Conf 4 vs. Conf 5&1.317465&0.187683&0.002778&0.002778\\
+17&Conf 4 vs. Conf 7&1.17108&0.241567&0.002941&0.002941\\
+16&Conf 1 vs. Conf 6&1.024695&0.305507&0.003125&0.003125\\
+15&Conf 2 vs. Conf 3&1.024695&0.305507&0.003333&0.003333\\
+14&Conf 1 vs. Conf 5&0.87831&0.379775&0.003571&0.003571\\
+13&Conf 2 vs. Conf 4&0.87831&0.379775&0.003846&0.003846\\
+12&Conf 1 vs. Conf 7&0.731925&0.464214&0.004167&0.004167\\
+11&Conf 3 vs. Conf 7&0.731925&0.464214&0.004545&0.004545\\
+10&Conf 3 vs. Conf 5&0.58554&0.558185&0.005&0.005\\
+9&Conf 2 vs. Conf 6&0.58554&0.558185&0.005556&0.005556\\
+8&Conf 1 vs. Conf 2&0.439155&0.660549&0.00625&0.00625\\
+7&Conf 3 vs. Conf 6&0.439155&0.660549&0.007143&0.007143\\
+6&Conf 1 vs. Conf 4&0.439155&0.660549&0.008333&0.008333\\
+5&Conf 2 vs. Conf 5&0.439155&0.660549&0.01&0.01\\
+4&Conf 2 vs. Conf 7&0.29277&0.769698&0.0125&0.0125\\
+3&Conf 6 vs. Conf 7&0.29277&0.769698&0.016667&0.016667\\
+2&Conf 5 vs. Conf 7&0.146385&0.883617&0.025&0.025\\
+1&Conf 5 vs. Conf 6&0.146385&0.883617&0.05&0.05\\
+\hline
+\end{tabular}
+\caption{P-values Table for $\alpha=0.05$}
+\end{table}Nemenyi's procedure rejects those hypotheses that have an unadjusted p-value $\le0.002381$.
+
+Holm's procedure rejects those hypotheses that have an unadjusted p-value $\le0.002381$.
+
+Bergmann's procedure does not reject any hypotheses.
+
+\pagebreak
+
+\subsection{P-values for $\alpha=0.10$}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{cccccc}
+$i$&algorithms&$z=(R_0 - R_i)/SE$&$p$&Holm&Shaffer\\
+\hline21&Conf 3 vs. Conf 4&1.903005&0.05704&0.004762&0.004762\\
+20&Conf 1 vs. Conf 3&1.46385&0.143235&0.005&0.005\\
+19&Conf 4 vs. Conf 6&1.46385&0.143235&0.005263&0.005263\\
+18&Conf 4 vs. Conf 5&1.317465&0.187683&0.005556&0.005556\\
+17&Conf 4 vs. Conf 7&1.17108&0.241567&0.005882&0.005882\\
+16&Conf 1 vs. Conf 6&1.024695&0.305507&0.00625&0.00625\\
+15&Conf 2 vs. Conf 3&1.024695&0.305507&0.006667&0.006667\\
+14&Conf 1 vs. Conf 5&0.87831&0.379775&0.007143&0.007143\\
+13&Conf 2 vs. Conf 4&0.87831&0.379775&0.007692&0.007692\\
+12&Conf 1 vs. Conf 7&0.731925&0.464214&0.008333&0.008333\\
+11&Conf 3 vs. Conf 7&0.731925&0.464214&0.009091&0.009091\\
+10&Conf 3 vs. Conf 5&0.58554&0.558185&0.01&0.01\\
+9&Conf 2 vs. Conf 6&0.58554&0.558185&0.011111&0.011111\\
+8&Conf 1 vs. Conf 2&0.439155&0.660549&0.0125&0.0125\\
+7&Conf 3 vs. Conf 6&0.439155&0.660549&0.014286&0.014286\\
+6&Conf 1 vs. Conf 4&0.439155&0.660549&0.016667&0.016667\\
+5&Conf 2 vs. Conf 5&0.439155&0.660549&0.02&0.02\\
+4&Conf 2 vs. Conf 7&0.29277&0.769698&0.025&0.025\\
+3&Conf 6 vs. Conf 7&0.29277&0.769698&0.033333&0.033333\\
+2&Conf 5 vs. Conf 7&0.146385&0.883617&0.05&0.05\\
+1&Conf 5 vs. Conf 6&0.146385&0.883617&0.1&0.1\\
+\hline
+\end{tabular}
+\caption{P-values Table for $\alpha=0.10$}
+\end{table}Nemenyi's procedure rejects those hypotheses that have an unadjusted p-value $\le0.004762$.
+
+Holm's procedure rejects those hypotheses that have an unadjusted p-value $\le0.004762$.
+
+Bergmann's procedure does not reject any hypotheses.
+
+\pagebreak
+
+\subsection{Adjusted p-values}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{ccccccc}
+i&hypothesis&unadjusted $p$&$p_{Neme}$&$p_{Holm}$&$p_{Shaf}$&$p_{Berg}$\\
+\hline1&Conf 3 vs .Conf 4&0.05704&1.197837&1.197837&1.197837&1.197837\\
+2&Conf 1 vs .Conf 3&0.143235&3.007933&2.864698&2.148524&2.148524\\
+3&Conf 4 vs .Conf 6&0.143235&3.007933&2.864698&2.148524&2.148524\\
+4&Conf 4 vs .Conf 5&0.187683&3.941338&3.37829&2.815242&2.148524\\
+5&Conf 4 vs .Conf 7&0.241567&5.072898&4.106632&3.623499&2.174099\\
+6&Conf 1 vs .Conf 6&0.305507&6.415649&4.888113&4.582606&3.055071\\
+7&Conf 2 vs .Conf 3&0.305507&6.415649&4.888113&4.582606&3.360578\\
+8&Conf 1 vs .Conf 5&0.379775&7.975285&5.316857&4.582606&3.360578\\
+9&Conf 2 vs .Conf 4&0.379775&7.975285&5.316857&4.582606&3.417979\\
+10&Conf 1 vs .Conf 7&0.464214&9.748501&5.570572&5.106357&3.417979\\
+11&Conf 3 vs .Conf 7&0.464214&9.748501&5.570572&5.106357&3.417979\\
+12&Conf 3 vs .Conf 5&0.558185&11.721878&5.581846&5.581846&3.417979\\
+13&Conf 2 vs .Conf 6&0.558185&11.721878&5.581846&5.581846&3.907293\\
+14&Conf 1 vs .Conf 2&0.660549&13.871533&5.581846&5.581846&3.907293\\
+15&Conf 3 vs .Conf 6&0.660549&13.871533&5.581846&5.581846&3.907293\\
+16&Conf 1 vs .Conf 4&0.660549&13.871533&5.581846&5.581846&3.907293\\
+17&Conf 2 vs .Conf 5&0.660549&13.871533&5.581846&5.581846&3.907293\\
+18&Conf 2 vs .Conf 7&0.769698&16.163657&5.581846&5.581846&3.907293\\
+19&Conf 6 vs .Conf 7&0.769698&16.163657&5.581846&5.581846&3.907293\\
+20&Conf 5 vs .Conf 7&0.883617&18.555967&5.581846&5.581846&3.907293\\
+21&Conf 5 vs .Conf 6&0.883617&18.555967&5.581846&5.581846&3.907293\\
+\hline
+\end{tabular}
+\caption{Adjusted $p$-values}
+\end{table}
+
+\end{landscape}
+\end{document}
