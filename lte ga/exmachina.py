@@ -12,23 +12,29 @@ import math
 
 equipos_terminales = 30
 rangos=10
+celda=0
 random.seed(0)
+#
 print("Cargando datos de coordenadas")
 cord_x = np.loadtxt("ues_cord_x.txt")
 cord_y = np.loadtxt("ues_cord_y.txt")
+#
 print("Cargando informacion de capacidad")
-throughput_data = pd.read_excel('capacidad.xls')
+capacidad_data = pd.read_excel('capacidad.xls')
+#
 print("Cargando información de tbs y snr")
 tbs = [np.loadtxt('garchivos/run1/tbs1.txt'), np.loadtxt('garchivos/run1/tbs2.txt'), np.loadtxt('garchivos/run1/tbs3.txt'), 
 np.loadtxt('garchivos/run1/tbs4.txt'), np.loadtxt('garchivos/run1/tbs5.txt'), np.loadtxt('garchivos/run1/tbs6.txt'), 
 np.loadtxt('garchivos/run1/tbs7.txt'), np.loadtxt('garchivos/run1/tbs8.txt'), np.loadtxt('garchivos/run1/tbs9.txt'),
 np.loadtxt('garchivos/run1/tbs10.txt')]
+##
 sinr = [np.loadtxt('garchivos/run1/snr1.txt'), np.loadtxt('garchivos/run1/snr2.txt'), np.loadtxt('garchivos/run1/snr3.txt'), 
 np.loadtxt('garchivos/run1/snr4.txt'), np.loadtxt('garchivos/run1/snr5.txt'), np.loadtxt('garchivos/run1/snr6.txt'), 
 np.loadtxt('garchivos/run1/snr7.txt'), np.loadtxt('garchivos/run1/snr8.txt'), np.loadtxt('garchivos/run1/snr9.txt'),
 np.loadtxt('garchivos/run1/snr10.txt')]
-print("Carga ok ...ajustando variables")
+#
 #ajuste de variables
+print("Carga ok ...ajustando variables")
 tbs_run1=tbs[0]
 tbs_run1t=np.transpose(tbs_run1)
 sinr_run1 = sinr[0]
@@ -36,16 +42,14 @@ sinr_run1t =np.transpose(sinr_run1)
 #definicion de coordenadas x,y
 x=cord_x
 y=cord_y
-time.sleep(1)
-#tbs_tras=np.transpose(tbs[0])
-
-#print(np.shape(cord_x))
-#print(np.shape(cord_y))
-
-#x = np.random.rand(equipos_terminales)
-#y = np.random.rand(equipos_terminales)
-
-# We want to minimize the distance so the weights have to be negative
+#otras variables
+maximo = np.max(sinr_run1t[celda])
+minimo = np.min(sinr_run1t[celda])
+#
+multiplicador = (sinr_run1t[celda]-minimo)/maximo
+#
+throughput30=np.zeros(30)
+#
 #se busca maximizar el throughput, peso es positivo
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 #  The individuals are just single integer (typecode='i') array of dimension 1xequipos_terminales
@@ -53,6 +57,7 @@ creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", array.array, typecode='i', fitness=creator.FitnessMax)
 toolbox = base.Toolbox()
 # Attribute generator
+#register(<nombre>, funcion de probabilidad,distribucion, parametro1, parameetro2, etc.)
 toolbox.register("indices", random.choices, range(9), k=equipos_terminales )
 # Structure initializers
 toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.indices)
@@ -61,26 +66,33 @@ toolbox.register("mate", tools.cxOrdered)
 toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.05)
 toolbox.register("select", tools.selTournament, tournsize=3)
 
-def eval_Throughput(individual):
-    recursos=np.sum(individual)
-    print("prbs",recursos)
-    #i: individual
-    #for cromosoma in range(30):
-        #j: celda
-        #for celda in range(4):
-            #o podría ser alreves
-            #print(i,j)
-    #throughput_data=data.iloc[tbs,individual]
-    #throughput = np.sum(throughput_data)
-    if recursos<90 or recursos>110 :
-        throughput=throughput-0.3*throughput
-    #evaluar los 10 valores de cada tbs de 4 celdas
-    #comprar el individuo en la tabla de capacidad con tbs
-    #evaluar thoruput, maximizar
 
-    #sinr se convierte en un multiplicador que afecta el throuput, con 100%
-    #el valor maximo de sinr. Es necesario procesar el resto de valores.
-    return max,
+
+def eval_Throughput(individual):
+    #print("----------->individuo", individual)
+    #print("prbs",recursos)
+    for cromosoma in range(30):
+        throughput30[cromosoma] = int(capacidad_data.iloc[int(tbs_run1t[celda][cromosoma])+1,individual[cromosoma]])
+        #print(throughput30[cromosoma])
+    for cromosoma in range(30):
+        #sin 1-multplicador, genera valores de throughput negativo, eso no es posible.
+        #sin embargo en la suma, estos valores se compensan
+        throughput30[cromosoma]=throughput30[cromosoma]*(multiplicador[cromosoma] )
+    
+    throughput=np.sum(throughput30)
+    recursos=np.sum(individual)
+    thinit=throughput
+    #sin sirn recursos 102 funciona ok
+    if recursos>100:
+        throughput=throughput-0.5*throughput
+    if np.count_nonzero(individual)!=28:
+        throughput=throughput-0.3*throughput
+        #tercer resultado con 50 funciona perfecto
+        #segundo resultado con 0.87 resulta en 0,1,7
+        #primer resutaldo con 0.6 sin sirn
+    #time.sleep(0.5)
+    #print("recursos: ", recursos, "inicial: ",thinit, " / velocidad: ",throughput, "distancia: ",thinit/throughput)
+    return throughput,
 
 def evalTSP(individual):
     print("----------->individuo", individual)
@@ -99,12 +111,12 @@ def evalTSP(individual):
     if np.sum(individual)>100:
         distance=distance-2*distance
     print("suma2: ",distance)
-    #time.sleep(10)
+    time.sleep(1)
     return distance,
 
-toolbox.register("evaluate", evalTSP)
+#toolbox.register("evaluate", evalTSP)
 
-#toolbox.register("evaluate", eval_Throughput)
+toolbox.register("evaluate", eval_Throughput)
 
 
 def main():
@@ -132,7 +144,7 @@ if __name__ == "__main__":
     pop, stats, hof = main()
     # plot the best one
     ind = hof[0]
-    print ("Solution: ", ind)
+    print ("Solution: ", ind, "prbs: ", np.sum(ind), "forma ", np.shape(ind))
     plt.figure(2)
     plt.plot(x[ind], y[ind])
     plt.show()
