@@ -74,10 +74,11 @@ def eval_Throughput(individual):
     #print("prbs",recursos)
     for cromosoma in range(30):
         throughput30[cromosoma] = int(capacidad_data.iloc[int(tbs_run1t[celda][cromosoma])+1,individual[cromosoma]])
-    for cromosoma in range(30):
+    
+    #for cromosoma in range(30):
         #sin 1-multplicador, genera valores de throughput negativo, eso no es posible.
         #sin embargo en la suma, estos valores se compensan
-        throughput30[cromosoma]=int(math.floor( throughput30[cromosoma]*(multiplicador[cromosoma] )))
+    #    throughput30[cromosoma]=int(math.floor( throughput30[cromosoma]*(multiplicador[cromosoma] )))
     
     throughput=np.sum(throughput30)
     if recursos>110 :
