@@ -96,6 +96,7 @@ global nombre_secuencia_snr
 contador=0
 nombre_secuencia_tbs='tbs';
 nombre_secuencia_snr='snr';
+nombre_secuencia_prb='prbs'
 ta=valores(1);
 desvanecimiento=valores(2);
 modelo=valores(3);
@@ -104,7 +105,7 @@ fr=valores(5);
 po=valores(6);
 BW=valores(7);
 radio=valores(8);
-planificador=valores(9);
+planificador=3;
 minMR=valores(10); % CQI maximo 14 || >SINR objetivo 4.4dB
 
 NumSim=0;
@@ -571,7 +572,13 @@ switch planificador
     [prb_PF]=plan_Proportional_Fair(nc,tp_PF,tbs,SINR,prb,3*nues);
     archivo_tbs=strcat(nombre_secuencia_tbs, num2str(NumSim),'.txt')
     archivo_snr=strcat(nombre_secuencia_snr, num2str(NumSim),'.txt')
+    prbs_archivo=strcat(nombre_secuencia_prb, num2str(NumSim),'.txt')
     %tbs;
+    
+    fid = fopen(prbs_archivo, 'wt');
+    fprintf(fid,'%f %f %f %f\n',[prb_PF(:,1),prb_PF(:,2),prb_PF(:,3),prb_PF(:,4)]);
+    fid = fclose(fid);
+    
     fid = fopen(archivo_snr, 'wt');
     fprintf(fid,'%f %f %f %f\n',[SINR(:,1),SINR(:,2),SINR(:,3),SINR(:,4)]);
     fid = fclose(fid);
@@ -579,6 +586,8 @@ switch planificador
     fid = fopen(archivo_tbs, 'wt');
     fprintf(fid,'%f %f %f %f\n',[tbs(:,1), tbs(:,2), tbs(:,3), tbs(:,4)]);
     fid = fclose(fid);
+    prb_PF=load('ganadores.txt');
+    tbs=load('tbs1.txt');
     %save -ascii archivo_tbs tbs;
     tabla_capacidad= xlsread('capacidad.xls');
     for i=1:3*nues 
