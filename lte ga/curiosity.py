@@ -59,7 +59,7 @@ def main(celda, tbs, sinr, capacidad_data):
         thinit=throughput
     #maximo, 0,8 y 0.45
         if recursos>100:
-            throughput=throughput-0.7*throughput
+            throughput=throughput-0.81*throughput
         if np.count_nonzero(individual)!=29:
             throughput=throughput-0.56*throughput
         return throughput,   
@@ -89,7 +89,7 @@ def main(celda, tbs, sinr, capacidad_data):
     stats.register("max", np.max)
     # use one of the built in GA's with a probablilty of mating of 0.7
     # a probability of mutating 0.2 and 140 generations.
-    algorithms.eaSimple(pop, toolbox, 0.7, 0.3, 200, stats=stats, halloffame=hof) #antes 0.1
+    algorithms.eaSimple(pop, toolbox, 0.7, 0.2, 200, stats=stats, halloffame=hof) #antes 0.1
 
     return pop, stats, hof
 
